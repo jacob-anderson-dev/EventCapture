@@ -22,8 +22,10 @@ public class Recorder {
     private Boolean isListening;
     private Integer minBufferSize;
     private long startTime;
+
     private List<Short> audioData;
     private List<AudioTimestamp> timeData;
+
     private File file;
     private AudioRecord audioRecord;
 
@@ -61,21 +63,27 @@ public class Recorder {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void listen(Integer frequency) {
+        //Initialize AudioRecord and all Lists
         initializeListen(frequency);
         short[] audioBuffer = new short[minBufferSize];
 
+        //Start listening through the microphone
         audioRecord.startRecording();
         while (isListening) {
+            //Read in a small number of shorts into audioBuffer
             Integer numberOfShortsRead = audioRecord.read(audioBuffer, 0, minBufferSize);
 
+            //Read all of audioBuffer into audioData
             for (Integer i = 0; i < numberOfShortsRead; i++) {
                 audioData.add(audioBuffer[i]);
             }
 
+            //Make a TimeStamp and add it to timeData
             AudioTimestamp audioTimestamp = new AudioTimestamp();
             audioRecord.getTimestamp(audioTimestamp, AudioTimestamp.TIMEBASE_MONOTONIC);
             timeData.add(audioTimestamp);
         }
+        //Stop listening
         audioRecord.stop();
     }
 
@@ -86,9 +94,11 @@ public class Recorder {
             OutputStream outputStream = new FileOutputStream(file);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
             DataOutputStream dataOutputStream = new DataOutputStream(bufferedOutputStream);
+
             for (long i = getStartIndex(preTime, postTime); i < audioData.size(); i++) {
                 dataOutputStream.writeShort(audioData.get((int) i));
             }
+
             dataOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,14 +107,23 @@ public class Recorder {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private long getStartIndex(long preTime, long postTime) {
+        //Initialize framePosition
+        //endTime = duration of total recording in milliseconds
         long framePosition = 0;
         long endTime = (timeData.get(timeData.size() - 1).nanoTime / 1000000) - (startTime);
+
+        //Loop through timeData
         for (Integer i = 0; i < timeData.size(); i++) {
+            //time = current time in milliseconds
             long time = ((timeData.get(i).nanoTime / 1000000) - (startTime));
+
+            //If the current time is preTime and postTime before endTime
             if ((time / 100) == ((endTime - (preTime + postTime)) / 100)) {
+                //return the framePosition
                 framePosition = timeData.get(i).framePosition;
             }
         }
+
         return framePosition;
     }
 

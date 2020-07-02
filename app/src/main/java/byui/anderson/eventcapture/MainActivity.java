@@ -24,8 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private Button recordButton;
     private Button playButton;
     private Toolbar toolbar;
+
     private long preTime;
     private long postTime;
+
     private PermissionChecker permissionChecker;
     private Recorder recorder;
     private Player player;
@@ -43,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
         recordButton = (Button) findViewById(R.id.recordButton);
         playButton = (Button) findViewById(R.id.playButton);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         preTime = 5000l;
         postTime = 5000l;
+
         permissionChecker = new PermissionChecker(new WeakReference<Activity>(MainActivity.this));
         recorder = new Recorder();
         player = new Player();
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     public void startListening() {
         recordButton.setEnabled(false);
         playButton.setEnabled(false);
+
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -96,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }).start();
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -157,20 +163,20 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
-    public void startSettings() {
-        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings:
-                startSettings();
-        }
-        return true;
-    }
+//    public void startSettings() {
+//        Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+//        startActivity(settingsIntent);
+//    }
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.settings_menu, menu);
+//        return true;
+//    }
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.settings:
+//                startSettings();
+//        }
+//        return true;
+//    }
 }
