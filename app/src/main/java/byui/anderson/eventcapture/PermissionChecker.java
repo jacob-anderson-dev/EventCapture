@@ -2,7 +2,6 @@ package byui.anderson.eventcapture;
 
 import android.app.Activity;
 import android.widget.Toast;
-
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -11,7 +10,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 
