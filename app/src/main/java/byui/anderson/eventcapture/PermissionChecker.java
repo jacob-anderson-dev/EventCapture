@@ -21,7 +21,6 @@ public class PermissionChecker {
 
     public PermissionChecker() {
     }
-
     public PermissionChecker(WeakReference<Activity> mainActivity) {
         this.mainActivity = mainActivity;
     }
@@ -36,12 +35,10 @@ public class PermissionChecker {
                     public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
                         Toast.makeText(mainActivity.get(), "Permission Granted!", Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
                         Toast.makeText(mainActivity.get(), "Permission Denied!", Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
                         Toast.makeText(mainActivity.get(), "Permission Needed!", Toast.LENGTH_SHORT).show();
@@ -49,7 +46,6 @@ public class PermissionChecker {
                 })
                 .check();
     }
-
     public void checkPermissions(String permission1, String permission2, String permission3) {
         Dexter.withContext(mainActivity.get())
                 .withPermissions(permission1, permission2, permission3)
