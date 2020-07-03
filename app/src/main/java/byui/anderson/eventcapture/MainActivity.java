@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button recordButton;
     private Button playButton;
-    private Toolbar toolbar;
 
     private long preTime;
     private long postTime;
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         recordButton = (Button) findViewById(R.id.recordButton);
         playButton = (Button) findViewById(R.id.playButton);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         preTime = 5000l;
         postTime = 5000l;
@@ -52,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         permissionChecker = new PermissionChecker(new WeakReference<Activity>(MainActivity.this));
         recorder = new Recorder();
         player = new Player();
-
-        setSupportActionBar(toolbar);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
