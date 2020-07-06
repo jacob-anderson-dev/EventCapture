@@ -3,12 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/MainFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/MainFragment"
         android:name="byui.anderson.eventcapture.MainFragment"
         android:label="Main Fragment"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_main"/>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="byui.anderson.eventcapture.SettingsFragment"
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_MainFragment"
+            app:destination="@id/MainFragment" />
     </fragment>
+
+    <action
+        android:id="@+id/open_settings_fragment"
+        app:destination="@id/settingsFragment"/>
+
 </navigation>

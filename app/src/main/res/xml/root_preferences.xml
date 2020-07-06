@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="Record Time">
+
+        <EditTextPreference
+            android:defaultValue="5"
+            android:key="pre_time"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Set the amount of record time before trigger"
+            android:title="Pre-Trigger Record Time" />
+
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="5"
+            android:key="post_time"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Set the amount of record time after trigger"
+            android:title="Post-Trigger Record Time" />
+
+    </PreferenceCategory>
+</PreferenceScreen>
