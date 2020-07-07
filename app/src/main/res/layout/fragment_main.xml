@@ -6,25 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/recordButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recordFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="record"
+        android:clickable="true"
+        app:backgroundTint="#E6E6E6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:srcCompat="@drawable/ic_baseline_fiber_manual_record_24" />
 
-    <Button
-        android:id="@+id/playButton"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/playFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play"
+        android:clickable="true"
+        app:backgroundTint="#E6E6E6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recordButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toEndOf="@+id/recordFAB"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

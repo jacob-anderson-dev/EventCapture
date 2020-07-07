@@ -1,34 +1,30 @@
 package byui.anderson.eventcapture;
 
-import android.Manifest;
-import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
-import java.lang.ref.WeakReference;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainFragment extends Fragment {
 
-    private Button recordButton;
-    private Button playButton;
-
     private long preTime;
     private long postTime;
-
-    private PermissionChecker permissionChecker;
+    private FloatingActionButton recordFAB;
+    private FloatingActionButton playFAB;
     private Recorder recorder;
     private Player player;
 
@@ -44,22 +40,22 @@ public class MainFragment extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        recordButton = (Button) getActivity().findViewById(R.id.recordButton);
-        playButton = (Button) getActivity().findViewById(R.id.playButton);
 
-        preTime = 5000l;
-        postTime = 5000l;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String pre_time = sharedPreferences.getString("pre_time", "");
+        String post_time = sharedPreferences.getString("post_time", "");
 
-        permissionChecker = new PermissionChecker(new WeakReference<Activity>(getActivity()));
-        recorder = new Recorder();
-        player = new Player();
+        Integer settingsPreTime = Integer.parseInt(pre_time);
+        Integer settingsPostTime = Integer.parseInt(post_time);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        permissionChecker.checkPermissions(
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        preTime = (settingsPreTime * 1000l);
+        postTime = (settingsPostTime * 1000l);
+        recordFAB = (FloatingActionButton) getActivity().findViewById(R.id.recordFAB);
+        playFAB = (FloatingActionButton) getActivity().findViewById(R.id.playFAB);
+        recorder = new Recorder();
+        player = new Player();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -67,13 +63,13 @@ public class MainFragment extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        recordButton.setOnClickListener(new View.OnClickListener() {
+        recordFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startRecording();
             }
         });
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startPlaying();
@@ -83,8 +79,8 @@ public class MainFragment extends Fragment {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void startListening() {
-        recordButton.setEnabled(false);
-        playButton.setEnabled(false);
+        recordFAB.setEnabled(false);
+        playFAB.setEnabled(false);
 
         new Thread(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -95,7 +91,7 @@ public class MainFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playButton.setEnabled(true);
+                        playFAB.setEnabled(true);
                     }
                 });
             }
@@ -107,7 +103,7 @@ public class MainFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        recordButton.setEnabled(true);
+                        recordFAB.setEnabled(true);
                     }
                 });
             }
@@ -131,6 +127,7 @@ public class MainFragment extends Fragment {
                                                 " more seconds",
                                         Toast.LENGTH_SHORT).show();
                             }
+
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onFinish() {
@@ -158,7 +155,7 @@ public class MainFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        playButton.setEnabled(false);
+                        playFAB.setEnabled(false);
                     }
                 });
             }

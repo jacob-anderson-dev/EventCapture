@@ -1,16 +1,25 @@
 package byui.anderson.eventcapture;
 
+import android.Manifest;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.Navigation;
 
+import java.lang.ref.WeakReference;
+
 public class MainActivity extends AppCompatActivity {
+
+    private PermissionChecker permissionChecker;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -24,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getWindow().setNavigationBarColor(Color.WHITE);
+
+        permissionChecker = new PermissionChecker(new WeakReference<Activity>(MainActivity.this));
+
+        permissionChecker.checkPermissions(
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
