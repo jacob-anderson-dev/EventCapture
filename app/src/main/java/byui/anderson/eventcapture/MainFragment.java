@@ -40,7 +40,6 @@ public class MainFragment extends Fragment {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String pre_time = sharedPreferences.getString("pre_time", "");
         String post_time = sharedPreferences.getString("post_time", "");

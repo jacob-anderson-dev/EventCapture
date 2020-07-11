@@ -68,8 +68,4 @@ public class Player {
             e.printStackTrace();
         }
     }
-
-    public void visualize() {
-
-    }
 }
